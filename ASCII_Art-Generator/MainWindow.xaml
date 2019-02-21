@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:ASCII_Art_Generator"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+    <Grid x:Name="LayoutRoot">
+        <Button Content="Button" HorizontalAlignment="Left" Margin="153,362,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+
     </Grid>
 </Window>

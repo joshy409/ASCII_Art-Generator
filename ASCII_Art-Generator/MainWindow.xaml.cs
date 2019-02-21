@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace ASCII_Art_Generator
 {
     /// <summary>
@@ -23,6 +24,19 @@ namespace ASCII_Art_Generator
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            bool? result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                // Open document 
+                string filename = dlg.FileName;
+                ConvertImageToGrayScaleImage(filename);
+            }
         }
     }
 }
