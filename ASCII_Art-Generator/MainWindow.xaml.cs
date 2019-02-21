@@ -35,7 +35,9 @@ namespace ASCII_Art_Generator
             {
                 // Open document 
                 string filename = dlg.FileName;
-                ConvertImageToGrayScaleImage(filename);
+                ImageSource grayImageSource = ConvertImageToGrayScaleImage(filename);
+                PixelColor[,] pixels = GetPixelColorData(grayImageSource);
+                ConvertPixelsToASCII(pixels);
             }
         }
     }

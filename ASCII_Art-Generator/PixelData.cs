@@ -17,7 +17,9 @@ namespace ASCII_Art_Generator
 {
     public partial class MainWindow : Window
     {
-        public struct PixelColor
+        
+
+        private struct PixelColor
         {
             public byte Blue;
             public byte Green;
@@ -25,7 +27,7 @@ namespace ASCII_Art_Generator
             public byte Alpha;
         }
 
-        public void ConvertImageToGrayScaleImage(string path)
+        private ImageSource ConvertImageToGrayScaleImage(string path)
 
         {
             // Create an Image control
@@ -49,12 +51,15 @@ namespace ASCII_Art_Generator
             // Set Source property of Image
             grayImage.Source = grayBitmap;
 
-            // Get pixel Color data
-            GetPixelColorData(grayImage.Source);
-            LayoutRoot.Children.Add(grayImage);
+            return grayImage.Source;
+
+
+            //// Get pixel Color data
+            //GetPixelColorData(grayImage.Source);
+            //LayoutRoot.Children.Add(grayImage);
         }
 
-        public void GetPixelColorData(ImageSource bmp)
+        private PixelColor[,] GetPixelColorData(ImageSource bmp)
         {
             //BitmapImage bmp = new BitmapImage(new Uri(path));
             BitmapSource source = (BitmapSource)bmp;
@@ -86,7 +91,7 @@ namespace ASCII_Art_Generator
                     };
                 }
             }
-
+            return pixels;
         }
     }
 }
