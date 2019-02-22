@@ -38,15 +38,15 @@ namespace ASCII_Art_Generator
                         for (int l = 0; l < resolution; l++)
                         {
                             sum += pixels[(j * resolution) + k, (i * resolution) + l].Blue;
-                            var a = j + k;
-                            var b = i + l;
                         }
                     }
                     sum /= 25;
                     AppendASCII(convertedString, sum);
                 }
                 ASCIIArt.Add(convertedString);
+                ouputTextBox.Text += (convertedString.ToString()+"\n");
             }
+           
             return ASCIIArt;
         }
 

@@ -50,7 +50,6 @@ namespace ASCII_Art_Generator
 
         private PixelColor[,] GetPixelColorData(ImageSource bmp)
         {
-            //BitmapImage bmp = new BitmapImage(new Uri(path));
             BitmapSource source = (BitmapSource)bmp;
 
             if (source.Format != PixelFormats.Bgra32)
