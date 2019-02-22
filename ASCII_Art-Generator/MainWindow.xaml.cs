@@ -26,16 +26,14 @@ namespace ASCII_Art_Generator
     {
         private const int CAPACITY = 10;
         private const int DEFAULT_PIXEL = 5;
-        private const float SCREEN_RATIO = 1.5f;
+        private const float SCREEN_RATIO = 1.3f;
         private const int OUTPUT_TEXTBOX_COUNT = 7;
         private const int OFFSET_TEXTBOX = 2; //offset value so that slider value matches the index 
         private bool IsStart = false; // variable to preven slider value changed function from being called at start
 
         List<List<StringBuilder>> ASCIIArts = new List<List<StringBuilder>>(CAPACITY);
-        //List<StringBuilder> ASCIIArt = new List<StringBuilder>();
         PixelColor[,] pixels = null;
         TextBox[] outputTextBoxes = new TextBox[OUTPUT_TEXTBOX_COUNT + OFFSET_TEXTBOX];
-        public bool IsHidden { get; set; }
 
         public MainWindow()
         {
@@ -50,7 +48,6 @@ namespace ASCII_Art_Generator
                 outputTextBoxes[i] = (TextBox)OutputTextBoxGrid.Children[i - OFFSET_TEXTBOX];
                 outputTextBoxes[i].Height = SystemParameters.WorkArea.Height / SCREEN_RATIO;
             }
-   
             this.Top = 0;
             this.Left = 0;
             this.Width = SystemParameters.WorkArea.Width;
@@ -117,6 +114,7 @@ namespace ASCII_Art_Generator
             myBitmapImage.UriSource = new Uri(fileName);
             myBitmapImage.DecodePixelHeight = 800;
             myBitmapImage.EndInit();
+
             //set image source
             inputPreview.Source = myBitmapImage;
         }
@@ -160,6 +158,11 @@ namespace ASCII_Art_Generator
             {
                 IsStart = true;
             }
+        }
+
+        private void Font_Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        { 
+            TextElement.SetFontSize(OutputTextBoxGrid, (int)fontSlider.Value);
         }
     }
 }

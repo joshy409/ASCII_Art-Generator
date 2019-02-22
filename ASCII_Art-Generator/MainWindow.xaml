@@ -8,7 +8,12 @@
         Title="ASCII Art Generator" ResizeMode="NoResize">
     <StackPanel>
         <Grid>
-            <TabControl Margin=" 25,50,25,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="*"/>
+
+            </Grid.ColumnDefinitions>
+            <TabControl Margin=" 25,50,25,0" Grid.Column="0">
                 <TabItem Header = "Input" >
                     <Image Name="inputPreview"/>
                 </TabItem>
@@ -24,6 +29,9 @@
                     </Grid>
                 </TabItem>
             </TabControl>
+  
+            <Slider Name ="fontSlider" Grid.Column="1" Margin="10,70,10,0" Orientation="Vertical"  Maximum="8" Minimum="1" TickPlacement="Both" IsSnapToTickEnabled="True" ValueChanged="Font_Slider_ValueChanged"/>
+
         </Grid>
 
 
