@@ -35,6 +35,7 @@ namespace ASCII_Art_Generator
             outputTextBox.Height = SystemParameters.WorkArea.Height / 1.5;
         }
 
+        List<List<StringBuilder>> ASCIIArts = new List<List<StringBuilder>>(10);
         List<StringBuilder> ASCIIArt = new List<StringBuilder>();
         PixelColor[,] pixels = null;
         private void Import_Click(object sender, RoutedEventArgs e)
@@ -52,7 +53,7 @@ namespace ASCII_Art_Generator
                 ImageSource grayImageSource = ConvertImageToGrayScaleImage(dialog.FileName);
                 pixels = GetPixelColorData(grayImageSource);
                 outputTextBox.Clear();
-                ASCIIArt = ConvertPixelsToASCII(pixels, resolutionSlider.Value);
+                ASCIIArts[5] = ConvertPixelsToASCII(pixels, resolutionSlider.Value);
                 LoadPreview(dialog.FileName);
             }
         }
