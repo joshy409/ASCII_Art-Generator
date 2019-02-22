@@ -18,15 +18,13 @@ namespace ASCII_Art_Generator
         private const string LIGHTGRAY = ".";
         private const string WHITE = " ";
         
-        private List<StringBuilder> ConvertPixelsToASCII (PixelColor[,] pixels, double dResolution)
+        private List<StringBuilder> ConvertPixelsToASCII (PixelColor[,] pixels, int resolution)
         {
             List<StringBuilder> ASCIIArt = new List<StringBuilder>();
             if (pixels != null)
             {
                 var width = pixels.GetLength(0);
                 var height = pixels.GetLength(1);
-                int resolution = (int)dResolution;
-
 
                 for (int i = 0; i < (height / resolution) - 1; i++)
                 {
@@ -45,9 +43,9 @@ namespace ASCII_Art_Generator
                         AppendASCII(convertedString, sum);
                     }
                     ASCIIArt.Add(convertedString);
-                    outputTextBox.Text += (convertedString.ToString() + "\n");
                 }
             }
+            
             return ASCIIArt;
         }
 
@@ -88,6 +86,16 @@ namespace ASCII_Art_Generator
             else
             {
                 convertedString.Append(WHITE);
+            }
+
+            convertedString.Append(" ");
+        }
+
+        private void PrintASCIIArt(List<StringBuilder> art, int index)
+        {
+            foreach (var line in art)
+            {
+                outputTextBoxes[index].Text += (line.ToString() + "\n");
             }
         }
     }

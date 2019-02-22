@@ -24,20 +24,43 @@ namespace ASCII_Art_Generator
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const int CAPACITY = 10;
+        private const int DEFAULT_PIXEL = 5;
+        private const float SCREEN_RATIO = 1.5f;
+        private const int OUTPUT_TEXTBOX_COUNT = 7;
+        private const int OFFSET_TEXTBOX = 2; //offset value so that slider value matches the index 
+        private bool IsStart = false; // variable to preven slider value changed function from being called at start
+
+        List<List<StringBuilder>> ASCIIArts = new List<List<StringBuilder>>(CAPACITY);
+        //List<StringBuilder> ASCIIArt = new List<StringBuilder>();
+        PixelColor[,] pixels = null;
+        TextBox[] outputTextBoxes = new TextBox[OUTPUT_TEXTBOX_COUNT + OFFSET_TEXTBOX];
+        public bool IsHidden { get; set; }
+
         public MainWindow()
         {
+            for (int i = 0; i < CAPACITY; i++)
+            {
+                ASCIIArts.Add(new List<StringBuilder>());
+            }
+
             InitializeComponent();
+            for (int i = OFFSET_TEXTBOX; i < OUTPUT_TEXTBOX_COUNT + OFFSET_TEXTBOX; i++)
+            {
+                outputTextBoxes[i] = (TextBox)OutputTextBoxGrid.Children[i - OFFSET_TEXTBOX];
+                outputTextBoxes[i].Height = SystemParameters.WorkArea.Height / SCREEN_RATIO;
+            }
+   
             this.Top = 0;
             this.Left = 0;
             this.Width = SystemParameters.WorkArea.Width;
             this.Height = SystemParameters.WorkArea.Height;
-            inputPreview.Height = SystemParameters.WorkArea.Height / 1.5;
-            outputTextBox.Height = SystemParameters.WorkArea.Height / 1.5;
+            inputPreview.Height = SystemParameters.WorkArea.Height / SCREEN_RATIO;
+            resolutionSlider.Value = DEFAULT_PIXEL;
+
         }
 
-        List<List<StringBuilder>> ASCIIArts = new List<List<StringBuilder>>(10);
-        List<StringBuilder> ASCIIArt = new List<StringBuilder>();
-        PixelColor[,] pixels = null;
+        
         private void Import_Click(object sender, RoutedEventArgs e)
         {
             // Create OpenFileDialog 
@@ -52,10 +75,36 @@ namespace ASCII_Art_Generator
             {
                 ImageSource grayImageSource = ConvertImageToGrayScaleImage(dialog.FileName);
                 pixels = GetPixelColorData(grayImageSource);
-                outputTextBox.Clear();
-                ASCIIArts[5] = ConvertPixelsToASCII(pixels, resolutionSlider.Value);
+                resolutionSlider.Value = DEFAULT_PIXEL;
+                ClearTextBoxes(DEFAULT_PIXEL);
+                ASCIIArts[DEFAULT_PIXEL] = ConvertPixelsToASCII(pixels, (int)resolutionSlider.Value);
+                PrintASCIIArt(ASCIIArts[DEFAULT_PIXEL], DEFAULT_PIXEL);
                 LoadPreview(dialog.FileName);
+                EnableTextBoxes(5);
             }
+        }
+
+        private void ClearTextBoxes(int index)
+        {
+            for (int i = OFFSET_TEXTBOX; i < outputTextBoxes.Length; i++)
+            {
+                outputTextBoxes[i].Clear();
+                outputTextBoxes[i].Visibility = Visibility.Hidden;
+                outputTextBoxes[i].IsEnabled = false;
+            }
+            outputTextBoxes[index].IsEnabled = true;
+            outputTextBoxes[index].Visibility = Visibility.Visible;
+        }
+
+        private void EnableTextBoxes(int index)
+        {
+            for (int i = OFFSET_TEXTBOX; i < outputTextBoxes.Length; i++)
+            {
+                outputTextBoxes[i].Visibility = Visibility.Hidden;
+                outputTextBoxes[i].IsEnabled = false;
+            }
+            outputTextBoxes[index].IsEnabled = true;
+            outputTextBoxes[index].Visibility = Visibility.Visible;
         }
 
         private void LoadPreview(string fileName)
@@ -82,7 +131,7 @@ namespace ASCII_Art_Generator
 
             if (dialog.ShowDialog() == true)
             {
-                string output = string.Join("\r\n", ASCIIArt);
+                string output = string.Join("\r\n", ASCIIArts[(int)resolutionSlider.Value]);
                 File.WriteAllText(dialog.FileName, output);
 
                 //open exported file
@@ -95,9 +144,22 @@ namespace ASCII_Art_Generator
 
         private void ResolutionSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            ASCIIArt.Clear();
-            outputTextBox.Clear();
-            ASCIIArt = ConvertPixelsToASCII(pixels, resolutionSlider.Value);
+            if (IsStart)
+            {
+                if (ASCIIArts[(int)resolutionSlider.Value].Count <= 0)
+                {
+                    ASCIIArts[(int)resolutionSlider.Value] = ConvertPixelsToASCII(pixels, (int)resolutionSlider.Value);
+                    PrintASCIIArt(ASCIIArts[(int)resolutionSlider.Value], (int)resolutionSlider.Value);
+                    EnableTextBoxes((int)resolutionSlider.Value);
+                }
+                else
+                {
+                    EnableTextBoxes((int)resolutionSlider.Value);
+                }
+            } else
+            {
+                IsStart = true;
+            }
         }
     }
 }
