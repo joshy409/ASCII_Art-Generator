@@ -32,11 +32,11 @@ namespace ASCII_Art_Generator
             this.Width = SystemParameters.WorkArea.Width;
             this.Height = SystemParameters.WorkArea.Height;
             inputPreview.Height = SystemParameters.WorkArea.Height / 1.5;
-            ouputTextBox.Height = SystemParameters.WorkArea.Height / 1.5;
+            outputTextBox.Height = SystemParameters.WorkArea.Height / 1.5;
         }
 
         List<StringBuilder> ASCIIArt = new List<StringBuilder>();
-
+        PixelColor[,] pixels = null;
         private void Import_Click(object sender, RoutedEventArgs e)
         {
             // Create OpenFileDialog 
@@ -50,8 +50,9 @@ namespace ASCII_Art_Generator
             if (dialog.ShowDialog() == true)
             {
                 ImageSource grayImageSource = ConvertImageToGrayScaleImage(dialog.FileName);
-                PixelColor[,] pixels = GetPixelColorData(grayImageSource);
-                ASCIIArt = ConvertPixelsToASCII(pixels);
+                pixels = GetPixelColorData(grayImageSource);
+                outputTextBox.Clear();
+                ASCIIArt = ConvertPixelsToASCII(pixels, resolutionSlider.Value);
                 LoadPreview(dialog.FileName);
             }
         }
@@ -91,9 +92,11 @@ namespace ASCII_Art_Generator
             }
         }
 
-        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void ResolutionSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-
+            ASCIIArt.Clear();
+            outputTextBox.Clear();
+            ASCIIArt = ConvertPixelsToASCII(pixels, resolutionSlider.Value);
         }
     }
 }

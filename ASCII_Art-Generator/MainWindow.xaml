@@ -13,7 +13,7 @@
                     <Image Name="inputPreview"/>
                 </TabItem>
                 <TabItem Header= "Output" >
-                    <TextBox IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  Name="ouputTextBox" FontFamily="Courier New"/>
+                    <TextBox IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  Name="outputTextBox" FontFamily="Courier New"/>
                 </TabItem>
             </TabControl>
         </Grid>
@@ -23,11 +23,13 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width=".5*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button Content="Import" Grid.Column="0" Margin="100,50,100,0" Click="Import_Click"/>
-            <Slider Grid.Column="1" Margin="100,50,100,0"/>
-            <Button Content="Export" Grid.Column="2" Margin="100,50,100,0" Click="Export_Click"/>
+            <Slider Name="resolutionSlider" Grid.Column="1" Margin="100,50,10,0" Maximum="8" Minimum="2" TickPlacement="Both" IsSnapToTickEnabled="True" Value="5" ValueChanged="ResolutionSlider_ValueChanged"/>
+            <TextBox Margin="0,50,200,0" Grid.Column="2" Text="{Binding ElementName=resolutionSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" />
+            <Button Content="Export" Grid.Column="3" Margin="100,50,100,0" Click="Export_Click"/>
         </Grid>
    
 

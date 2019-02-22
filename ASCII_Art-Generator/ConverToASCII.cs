@@ -18,35 +18,36 @@ namespace ASCII_Art_Generator
         private const string LIGHTGRAY = ".";
         private const string WHITE = " ";
         
-        private List<StringBuilder> ConvertPixelsToASCII (PixelColor[,] pixels)
+        private List<StringBuilder> ConvertPixelsToASCII (PixelColor[,] pixels, double dResolution)
         {
-            var width = pixels.GetLength(0);
-            var height = pixels.GetLength(1);
-
-            var resolution = 5;
-     
-            List<StringBuilder> ASCIIArt = new List<StringBuilder>() ;
-
-            for (int i = 0; i < (height/ resolution) -1; i ++)
+            List<StringBuilder> ASCIIArt = new List<StringBuilder>();
+            if (pixels != null)
             {
-                StringBuilder convertedString = new StringBuilder();
-                for (int j = 0; j < (width/ resolution) -1; j ++)
+                var width = pixels.GetLength(0);
+                var height = pixels.GetLength(1);
+                int resolution = (int)dResolution;
+
+
+                for (int i = 0; i < (height / resolution) - 1; i++)
                 {
-                    int sum = 0;
-                    for (int k = 0; k < resolution; k++)
+                    StringBuilder convertedString = new StringBuilder();
+                    for (int j = 0; j < (width / resolution) - 1; j++)
                     {
-                        for (int l = 0; l < resolution; l++)
+                        int sum = 0;
+                        for (int k = 0; k < resolution; k++)
                         {
-                            sum += pixels[(j * resolution) + k, (i * resolution) + l].Blue;
+                            for (int l = 0; l < resolution; l++)
+                            {
+                                sum += pixels[(j * resolution) + k, (i * resolution) + l].Blue;
+                            }
                         }
+                        sum /= 25;
+                        AppendASCII(convertedString, sum);
                     }
-                    sum /= 25;
-                    AppendASCII(convertedString, sum);
+                    ASCIIArt.Add(convertedString);
+                    outputTextBox.Text += (convertedString.ToString() + "\n");
                 }
-                ASCIIArt.Add(convertedString);
-                ouputTextBox.Text += (convertedString.ToString()+"\n");
             }
-           
             return ASCIIArt;
         }
 
