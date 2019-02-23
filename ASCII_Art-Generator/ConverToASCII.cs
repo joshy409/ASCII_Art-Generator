@@ -28,33 +28,9 @@ namespace ASCII_Art_Generator
                 var height = pixels.GetLength(1);
                 ASCIIarr = new StringBuilder[height / resolution -1];
 
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-                for (int i = 0; i < (height / resolution) - 1; i++)
-                {
-                    StringBuilder convertedString = new StringBuilder();
-                    for (int j = 0; j < (width / resolution) - 1; j++)
-                    {
-                        int sum = 0;
-                        for (int k = 0; k < resolution; k++)
-                        {
-                            for (int l = 0; l < resolution; l++)
-                            {
-                                sum += pixels[(j * resolution) + k, (i * resolution) + l].Blue;
-                            }
-                        }
-                        sum /= 25;
-                        AppendASCII(convertedString, sum);
-                    }
-                    ASCIIarr[i] = convertedString;
-                }
-                sw.Stop();
-                TimeSpan ts = sw.Elapsed;
-                Console.WriteLine("Time elapsed: {0}", sw.Elapsed);
-
                 //Stopwatch sw = new Stopwatch();
                 //sw.Start();
-                //Parallel.For(0, (height / resolution) - 1, i =>
+                //for (int i = 0; i < (height / resolution) - 1; i++)
                 //{
                 //    StringBuilder convertedString = new StringBuilder();
                 //    for (int j = 0; j < (width / resolution) - 1; j++)
@@ -70,11 +46,35 @@ namespace ASCII_Art_Generator
                 //        sum /= 25;
                 //        AppendASCII(convertedString, sum);
                 //    }
-                //    ASCIIarr[i] = (convertedString);
-                //});
+                //    ASCIIarr[i] = convertedString;
+                //}
                 //sw.Stop();
                 //TimeSpan ts = sw.Elapsed;
                 //Console.WriteLine("Time elapsed: {0}", sw.Elapsed);
+
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                Parallel.For(0, (height / resolution) - 1, i =>
+                {
+                    StringBuilder convertedString = new StringBuilder();
+                    for (int j = 0; j < (width / resolution) - 1; j++)
+                    {
+                        int sum = 0;
+                        for (int k = 0; k < resolution; k++)
+                        {
+                            for (int l = 0; l < resolution; l++)
+                            {
+                                sum += pixels[(j * resolution) + k, (i * resolution) + l].Blue;
+                            }
+                        }
+                        sum /= 25;
+                        AppendASCII(convertedString, sum);
+                    }
+                    ASCIIarr[i] = (convertedString);
+                });
+                sw.Stop();
+                TimeSpan ts = sw.Elapsed;
+                Console.WriteLine("Time elapsed: {0}", sw.Elapsed);
             }
             
             return ASCIIarr;
