@@ -30,7 +30,7 @@
                 </TabItem>
             </TabControl>
   
-            <Slider Name ="fontSlider" Grid.Column="1" Margin="10,70,10,0" Orientation="Vertical"  Maximum="8" Minimum="1" TickPlacement="Both" IsSnapToTickEnabled="True" ValueChanged="Font_Slider_ValueChanged"/>
+            <Slider Name ="fontSlider" Grid.Column="1" Margin="10,70,10,0" Orientation="Vertical"  Maximum="8" Minimum="1" TickPlacement="Both" IsSnapToTickEnabled="True" ValueChanged="Font_Slider_ValueChanged" Value="7"/>
 
         </Grid>
 

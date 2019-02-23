@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
-
+using System;
+using System.Diagnostics;
 
 namespace ASCII_Art_Generator
 {
@@ -18,14 +19,17 @@ namespace ASCII_Art_Generator
         private const string LIGHTGRAY = ".";
         private const string WHITE = " ";
         
-        private List<StringBuilder> ConvertPixelsToASCII (PixelColor[,] pixels, int resolution)
+        private StringBuilder[] ConvertPixelsToASCII (PixelColor[,] pixels, int resolution)
         {
-            List<StringBuilder> ASCIIArt = new List<StringBuilder>();
+            StringBuilder[] ASCIIarr = null;
             if (pixels != null)
             {
                 var width = pixels.GetLength(0);
                 var height = pixels.GetLength(1);
+                ASCIIarr = new StringBuilder[height / resolution -1];
 
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
                 for (int i = 0; i < (height / resolution) - 1; i++)
                 {
                     StringBuilder convertedString = new StringBuilder();
@@ -42,11 +46,38 @@ namespace ASCII_Art_Generator
                         sum /= 25;
                         AppendASCII(convertedString, sum);
                     }
-                    ASCIIArt.Add(convertedString);
+                    ASCIIarr[i] = convertedString;
                 }
+                sw.Stop();
+                TimeSpan ts = sw.Elapsed;
+                Console.WriteLine("Time elapsed: {0}", sw.Elapsed);
+
+                //Stopwatch sw = new Stopwatch();
+                //sw.Start();
+                //Parallel.For(0, (height / resolution) - 1, i =>
+                //{
+                //    StringBuilder convertedString = new StringBuilder();
+                //    for (int j = 0; j < (width / resolution) - 1; j++)
+                //    {
+                //        int sum = 0;
+                //        for (int k = 0; k < resolution; k++)
+                //        {
+                //            for (int l = 0; l < resolution; l++)
+                //            {
+                //                sum += pixels[(j * resolution) + k, (i * resolution) + l].Blue;
+                //            }
+                //        }
+                //        sum /= 25;
+                //        AppendASCII(convertedString, sum);
+                //    }
+                //    ASCIIarr[i] = (convertedString);
+                //});
+                //sw.Stop();
+                //TimeSpan ts = sw.Elapsed;
+                //Console.WriteLine("Time elapsed: {0}", sw.Elapsed);
             }
             
-            return ASCIIArt;
+            return ASCIIarr;
         }
 
         private static void AppendASCII(StringBuilder convertedString, int sum)
@@ -91,11 +122,14 @@ namespace ASCII_Art_Generator
             convertedString.Append(" ");
         }
 
-        private void PrintASCIIArt(List<StringBuilder> art, int index)
+        private void PrintASCIIArt(StringBuilder[] art, int index)
         {
-            foreach (var line in art)
+            if (art != null)
             {
-                outputTextBoxes[index].Text += (line.ToString() + "\n");
+                foreach (var line in art)
+                {
+                    outputTextBoxes[index].Text += (line.ToString() + "\n");
+                }
             }
         }
     }
