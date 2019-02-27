@@ -41,11 +41,6 @@ namespace ASCII_Art_Generator
             grayImage.Source = grayBitmap;
 
             return grayImage.Source;
-
-
-            //// Get pixel Color data
-            //GetPixelColorData(grayImage.Source);
-            //LayoutRoot.Children.Add(grayImage);
         }
 
         private PixelColor[,] GetPixelColorData(ImageSource bmp)

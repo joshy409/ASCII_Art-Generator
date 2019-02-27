@@ -8,17 +8,33 @@
         Title="ASCII Art Generator" ResizeMode="NoResize">
     <StackPanel>
         <Grid>
-            <TabControl Margin=" 25,50,25,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="*"/>
+
+            </Grid.ColumnDefinitions>
+            <TabControl Margin=" 25,50,25,0" Grid.Column="0">
                 <TabItem Header = "Input" >
                     <Image Name="inputPreview"/>
                 </TabItem>
                 <TabItem Header= "Output" >
-                    <TextBox IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  Name="outputTextBox" FontFamily="Courier New"/>
+                    <Grid Name="OutputTextBoxGrid">
+                        <TextBox Grid.Column="0" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  FontFamily="Courier New" />
+                        <TextBox Grid.Column="1" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  FontFamily="Courier New" />
+                        <TextBox Grid.Column="2" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  FontFamily="Courier New" />
+                        <TextBox Grid.Column="3" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  FontFamily="Courier New" />
+                        <TextBox Grid.Column="4" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  FontFamily="Courier New" />
+                        <TextBox Grid.Column="5" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  FontFamily="Courier New" />
+                        <TextBox Grid.Column="6" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  FontFamily="Courier New" />
+                    </Grid>
                 </TabItem>
             </TabControl>
+  
+            <Slider Name ="fontSlider" Grid.Column="1" Margin="10,70,10,0" Orientation="Vertical"  Maximum="8" Minimum="1" TickPlacement="Both" IsSnapToTickEnabled="True" ValueChanged="Font_Slider_ValueChanged" Value="7"/>
+
         </Grid>
 
-        
+
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -27,7 +43,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button Content="Import" Grid.Column="0" Margin="100,50,100,0" Click="Import_Click"/>
-            <Slider Name="resolutionSlider" Grid.Column="1" Margin="100,50,10,0" Maximum="8" Minimum="2" TickPlacement="Both" IsSnapToTickEnabled="True" Value="5" ValueChanged="ResolutionSlider_ValueChanged"/>
+            <Slider Name="resolutionSlider" Grid.Column="1" Margin="100,50,10,0" Maximum="8" Minimum="2" TickPlacement="Both" IsSnapToTickEnabled="True" ValueChanged="ResolutionSlider_ValueChanged"/>
             <TextBox Margin="0,50,200,0" Grid.Column="2" Text="{Binding ElementName=resolutionSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" />
             <Button Content="Export" Grid.Column="3" Margin="100,50,100,0" Click="Export_Click"/>
         </Grid>
