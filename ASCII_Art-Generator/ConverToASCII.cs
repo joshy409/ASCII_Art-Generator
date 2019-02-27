@@ -56,6 +56,7 @@ namespace ASCII_Art_Generator
             if (sum <= 30)
             {
                 convertedString.Append(BLACK);
+                
             }
             else if (sum <= 60)
             {
@@ -89,6 +90,7 @@ namespace ASCII_Art_Generator
             {
                 convertedString.Append(WHITE);
             }
+            convertedString.Append(" ");
         }
     }
 }
