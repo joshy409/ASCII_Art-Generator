@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -14,7 +15,7 @@ namespace ASCII_Art_Generator
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         private const int CAPACITY = 10;
         private const int DEFAULT_PIXEL = 5;
@@ -29,10 +30,18 @@ namespace ASCII_Art_Generator
 
         private double[] previousState = new double[4];
 
+        private int _kernel;
+        public event PropertyChangedEventHandler PropertyChanged;
+        public int Kernel
+        {
+            get { return _kernel; }
+            set { _kernel = value * value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Kernel")); }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
-
+            this.DataContext = this;
             for (int i = OFFSET_TEXTBOX; i < OUTPUT_TEXTBOX_COUNT + OFFSET_TEXTBOX; i++)
             {
                 outputTextBoxes[i] = (TextBox)OutputTextBoxGrid.Children[i - OFFSET_TEXTBOX];
@@ -42,7 +51,6 @@ namespace ASCII_Art_Generator
             this.Left = 0;
             this.Width = SystemParameters.WorkArea.Width;
             this.Height = SystemParameters.WorkArea.Height;
-
         }
 
         private void Import_Click(object sender, RoutedEventArgs e)
@@ -51,7 +59,6 @@ namespace ASCII_Art_Generator
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
 
             // Set filter for file extension and default file extension 
-            //dialog.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
             dialog.Filter = "Image Files (*.png,*.jpg,*.jpeg)|*.png;*.jpg;*.jpeg";
 
             if (dialog.ShowDialog() == true)
@@ -65,7 +72,7 @@ namespace ASCII_Art_Generator
 
                 resolutionSlider.Value = DEFAULT_PIXEL;
                 ClearTextBoxes(DEFAULT_PIXEL);
-                EnableTextBoxes(5);
+                EnableTextBoxes(DEFAULT_PIXEL);
                 GetASCIIArt();
             }      
         }
@@ -92,6 +99,7 @@ namespace ASCII_Art_Generator
 
         private void ResolutionSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            Kernel = (int)resolutionSlider.Value;
             if (IsStart && pixels != null)
             {
                 EnableTextBoxes((int)resolutionSlider.Value);
