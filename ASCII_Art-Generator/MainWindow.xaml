@@ -94,6 +94,7 @@
             <Slider Grid.ColumnSpan="2" Name="resolutionSlider" Grid.Column="3"  Maximum="8" Minimum="2" TickPlacement="Both" IsSnapToTickEnabled="True" ValueChanged="ResolutionSlider_ValueChanged" VerticalAlignment="Center" Margin="0,10,0,0"/>
             <TextBox  IsReadOnly="True" Grid.Column="5" Text="{Binding Path=Kernel}" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,10,0,0"/>
             <Button Content="Export" Grid.Column="6"  Click="Export_Click" VerticalAlignment="Center" Margin="0,10,0,0"/>
+            <TextBlock Grid.Column="10" Text="By Joshua Yang" VerticalAlignment="Bottom"/>
         </Grid>
 
 

@@ -8,15 +8,15 @@ namespace ASCII_Art_Generator
 {
     public partial class MainWindow : Window
     {
-        private const string BLACK = "@";
-        private const string CHARCOAL = "#";
-        private const string DARKGRAY = "8";
-        private const string MEDIUMGRAY = "&";
-        private const string MEDIUM = "o";
-        private const string GRAY = ":";
-        private const string SLATEGRAY = "*";
-        private const string LIGHTGRAY = ".";
-        private const string WHITE = " ";
+        private const char BLACK = '@';
+        private const char CHARCOAL = '#';
+        private const char DARKGRAY = '8';
+        private const char MEDIUMGRAY = '&';
+        private const char MEDIUM = 'o';
+        private const char GRAY = ':';
+        private const char SLATEGRAY = '*';
+        private const char LIGHTGRAY = '.';
+        private const char WHITE = ' ';
 
         
 
