@@ -10,9 +10,11 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width=".5*"/>
+                <ColumnDefinition Width=".5*"/>
 
             </Grid.ColumnDefinitions>
+
             <TabControl Name="Tabs" Margin=" 25,50,25,0" Grid.Column="0">
                 <TabItem  Header = "Input" >
                     <Image Name="inputPreview"/>
@@ -29,9 +31,21 @@
                     </Grid>
                 </TabItem>
             </TabControl>
-  
-            <Slider Name ="fontSlider" Grid.Column="1" Margin="10,70,10,0" Orientation="Vertical"  Maximum="8" Minimum="1" TickPlacement="Both" IsSnapToTickEnabled="True" ValueChanged="Font_Slider_ValueChanged" Value="7"/>
-
+            <StackPanel Grid.Column="1">
+                <Label  Content="Font Size" />
+                <Slider Name ="fontSlider"  Margin="10,70,10,0" Orientation="Vertical"  Maximum="8" Minimum="1" TickPlacement="Both" IsSnapToTickEnabled="True" ValueChanged="Font_Slider_ValueChanged" Value="7" VerticalAlignment="Stretch"/>
+                <TextBox  Text="{Binding ElementName=fontSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" />
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <Label  Content="Width" />
+                <TextBox  Name="WidthTextBox" TextAlignment="Center" IsReadOnly="True"/>
+                <Label  Content="Height" />
+                <TextBox  Name="HeightTextBox" TextAlignment="Center" IsReadOnly="True"/>
+                <Label  Content="ASCIIWidth" />
+                <TextBox  Name="ASCIIWidthTextBox" TextAlignment="Center" IsReadOnly="True"/>
+                <Label  Content="ASCIIHeight" />
+                <TextBox  Name="ASCIIHeightTextBox" TextAlignment="Center" IsReadOnly="True"/>
+            </StackPanel>
         </Grid>
 
 

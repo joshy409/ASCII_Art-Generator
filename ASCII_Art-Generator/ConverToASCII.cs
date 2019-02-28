@@ -17,14 +17,20 @@ namespace ASCII_Art_Generator
         private const string SLATEGRAY = "*";
         private const string LIGHTGRAY = ".";
         private const string WHITE = " ";
+
         
+
         private StringBuilder[] ConvertPixelsToASCII (PixelColor[,] pixels, int resolution)
         {
             StringBuilder[] ASCIIarr = null;
             if (pixels != null)
             {
                 var width = pixels.GetLength(0);
+                WidthTextBox.Text = width.ToString();
+                
                 var height = pixels.GetLength(1);
+                HeightTextBox.Text = height.ToString();
+
                 ASCIIarr = new StringBuilder[height / resolution - 1];
 
                 //Stopwatch sw = new Stopwatch();

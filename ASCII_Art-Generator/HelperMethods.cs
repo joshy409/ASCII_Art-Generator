@@ -50,6 +50,7 @@ namespace ASCII_Art_Generator
 
             //set image source
             inputPreview.Source = myBitmapImage;
+            Tabs.SelectedIndex = 0;
         }
     }
 }
