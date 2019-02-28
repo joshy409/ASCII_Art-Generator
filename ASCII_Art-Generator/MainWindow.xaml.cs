@@ -1,6 +1,5 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -8,9 +7,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-
-
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace ASCII_Art_Generator
 {
@@ -26,7 +24,7 @@ namespace ASCII_Art_Generator
         private const int OFFSET_TEXTBOX = 2; //offset value so that slider value matches the index 
         private bool IsStart = false; // variable to preven slider value changed function from being called at InitializeComponent()
 
-        StringBuilder[][] ASCIIArts = new StringBuilder[CAPACITY][];
+        StringBuilder[][] ASCIIArts = null;// = new StringBuilder[CAPACITY][];
         PixelColor[,] pixels = null;
         TextBox[] outputTextBoxes = new TextBox[OUTPUT_TEXTBOX_COUNT + OFFSET_TEXTBOX];
 
@@ -45,7 +43,6 @@ namespace ASCII_Art_Generator
             this.Height = SystemParameters.WorkArea.Height;
             inputPreview.Height = SystemParameters.WorkArea.Height / SCREEN_RATIO;
             resolutionSlider.Value = DEFAULT_PIXEL;
-
         }
 
         
@@ -55,28 +52,24 @@ namespace ASCII_Art_Generator
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
 
             // Set filter for file extension and default file extension 
-            dialog.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
+            //dialog.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
             dialog.Filter = "Image Files (*.png,*.jpg,*.jpeg)|(*.png;*.jpg;*.jpeg)";
 
-
+            Tabs.SelectedIndex = 0;
             if (dialog.ShowDialog() == true)
             {
-                foreach (var art in ASCIIArts)
-                {
-                    Array.Clear(ASCIIArts, 0, ASCIIArts.Length);
-                }
+                
+                LoadPreview(dialog.FileName);
+                ASCIIArts = new StringBuilder[CAPACITY][];
                 ImageSource grayImageSource = ConvertImageToGrayScaleImage(dialog.FileName);
                 pixels = GetPixelColorData(grayImageSource);
                 resolutionSlider.Value = DEFAULT_PIXEL;
                 ClearTextBoxes(DEFAULT_PIXEL);
-                ASCIIArts[DEFAULT_PIXEL] = ConvertPixelsToASCII(pixels, (int)resolutionSlider.Value);
-                PrintASCIIArt(ASCIIArts[DEFAULT_PIXEL], DEFAULT_PIXEL);
-                LoadPreview(dialog.FileName);
+                GetASCIIArtAsync();
                 EnableTextBoxes(5);
             }
-        }
-
         
+        }
 
         private void Export_Click(object sender, RoutedEventArgs e)
         {
@@ -103,21 +96,20 @@ namespace ASCII_Art_Generator
         {
             if (IsStart)
             {
-
-                if (ASCIIArts[(int)resolutionSlider.Value] == null)
-                {
-                    ASCIIArts[(int)resolutionSlider.Value] = ConvertPixelsToASCII(pixels, (int)resolutionSlider.Value);
-                    PrintASCIIArt(ASCIIArts[(int)resolutionSlider.Value], (int)resolutionSlider.Value);
-                    EnableTextBoxes((int)resolutionSlider.Value);
-                }
-                else
-                {
-                    EnableTextBoxes((int)resolutionSlider.Value);
-                }
-                
+                EnableTextBoxes((int)resolutionSlider.Value); 
             } else
             {
                 IsStart = true;
+            }
+        }
+
+        private void GetASCIIArtAsync()
+        {
+
+            for (int i = 2; i < 9; i++)
+            {
+                ASCIIArts[i] = ConvertPixelsToASCII(pixels, i);
+                PrintASCIIArt(ASCIIArts[i], i);
             }
         }
 

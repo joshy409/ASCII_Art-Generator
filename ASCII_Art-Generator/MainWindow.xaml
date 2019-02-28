@@ -13,8 +13,8 @@
                 <ColumnDefinition Width="*"/>
 
             </Grid.ColumnDefinitions>
-            <TabControl Margin=" 25,50,25,0" Grid.Column="0">
-                <TabItem Header = "Input" >
+            <TabControl Name="Tabs" Margin=" 25,50,25,0" Grid.Column="0">
+                <TabItem  Header = "Input" >
                     <Image Name="inputPreview"/>
                 </TabItem>
                 <TabItem Header= "Output" >

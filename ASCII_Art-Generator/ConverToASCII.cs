@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System;
@@ -26,7 +25,7 @@ namespace ASCII_Art_Generator
             {
                 var width = pixels.GetLength(0);
                 var height = pixels.GetLength(1);
-                ASCIIarr = new StringBuilder[height / resolution -1];
+                ASCIIarr = new StringBuilder[height / resolution - 1];
 
                 //Stopwatch sw = new Stopwatch();
                 //sw.Start();
@@ -47,6 +46,7 @@ namespace ASCII_Art_Generator
                 //        AppendASCII(convertedString, sum);
                 //    }
                 //    ASCIIarr[i] = convertedString;
+                //    outputTextBoxes[resolution].Text += (convertedString.ToString() + "\n");
                 //}
                 //sw.Stop();
                 //TimeSpan ts = sw.Elapsed;
@@ -76,7 +76,6 @@ namespace ASCII_Art_Generator
                 TimeSpan ts = sw.Elapsed;
                 Console.WriteLine("Time elapsed: {0}", sw.Elapsed);
             }
-            
             return ASCIIarr;
         }
 
@@ -126,10 +125,7 @@ namespace ASCII_Art_Generator
         {
             if (art != null)
             {
-                foreach (var line in art)
-                {
-                    outputTextBoxes[index].Text += (line.ToString() + "\n");
-                }
+                outputTextBoxes[index].Text = string.Join<StringBuilder>("\r\n", art);
             }
         }
     }
