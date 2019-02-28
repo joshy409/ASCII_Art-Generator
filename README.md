@@ -5,8 +5,10 @@ Mario Bird
 
 
 ## My Implementation
-![A screenshot of the included sample project](raygame/MarioBird.png)
-![A screenshot of the included sample project](raygame/MarioBird1.png)
+![A screenshot of the included sample project](ASCII_Art-Generator/SamplescreenShot.png)
+![A screenshot of the included sample project](ASCII_Art-Generator/SamplescreenShot1.png)
+![A screenshot of the included sample project](ASCII_Art-Generator/SamplescreenShot2.png)
+![A screenshot of the included sample project](ASCII_Art-Generator/SamplescreenShot3.png)
 
 ## How to play
 Play with Sound!
