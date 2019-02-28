@@ -7,8 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-using System.Threading.Tasks;
-using System.Threading;
+
 
 namespace ASCII_Art_Generator
 {
@@ -22,11 +21,13 @@ namespace ASCII_Art_Generator
         private const float SCREEN_RATIO = 1.3f;
         private const int OUTPUT_TEXTBOX_COUNT = 7;
         private const int OFFSET_TEXTBOX = 2; //offset value so that slider value matches the index 
-        private bool IsStart = false; // variable to preven slider value changed function from being called at InitializeComponent()
+        private bool IsStart = false; // variable to prevent slider value changed function from being called at InitializeComponent()
 
         StringBuilder[][] ASCIIArts = null;
         PixelColor[,] pixels = null;
         TextBox[] outputTextBoxes = new TextBox[OUTPUT_TEXTBOX_COUNT + OFFSET_TEXTBOX];
+
+        private double[] previousState = new double[4];
 
         public MainWindow()
         {
@@ -35,17 +36,15 @@ namespace ASCII_Art_Generator
             for (int i = OFFSET_TEXTBOX; i < OUTPUT_TEXTBOX_COUNT + OFFSET_TEXTBOX; i++)
             {
                 outputTextBoxes[i] = (TextBox)OutputTextBoxGrid.Children[i - OFFSET_TEXTBOX];
-                outputTextBoxes[i].Height = SystemParameters.WorkArea.Height / SCREEN_RATIO;
             }
 
             this.Top = 0;
             this.Left = 0;
             this.Width = SystemParameters.WorkArea.Width;
             this.Height = SystemParameters.WorkArea.Height;
-            inputPreview.Height = SystemParameters.WorkArea.Height / SCREEN_RATIO;
+
         }
 
-        
         private void Import_Click(object sender, RoutedEventArgs e)
         {
             // Create OpenFileDialog 
@@ -93,7 +92,7 @@ namespace ASCII_Art_Generator
 
         private void ResolutionSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (IsStart)
+            if (IsStart && pixels != null)
             {
                 EnableTextBoxes((int)resolutionSlider.Value);
                 ASCIIWidthTextBox.Text = (pixels.GetLength(0) / (int)resolutionSlider.Value).ToString();
@@ -104,18 +103,47 @@ namespace ASCII_Art_Generator
             }
         }
 
-        private void GetASCIIArt()
-        {
-            for (int i = OFFSET_TEXTBOX; i < OUTPUT_TEXTBOX_COUNT + OFFSET_TEXTBOX; i++)
-            {
-                ASCIIArts[i] = ConvertPixelsToASCII(pixels, i);
-                PrintASCIIArt(ASCIIArts[i], i);
-            }
-        }
-
         private void Font_Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         { 
             TextElement.SetFontSize(OutputTextBoxGrid, (int)fontSlider.Value);
+        }
+
+        private void OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            inputPreview.Height = this.Height / SCREEN_RATIO;
+            for (int i = OFFSET_TEXTBOX; i < OUTPUT_TEXTBOX_COUNT + OFFSET_TEXTBOX; i++)
+            {
+                outputTextBoxes[i].Height = this.Height / SCREEN_RATIO;
+            }
+        }
+
+        private void OnWindowStateChanged(object sender, EventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                previousState[0] = this.Top;
+                previousState[1] = this.Left;
+                previousState[2] = this.Width;
+                previousState[3] = this.Height;
+
+                this.Top = 0;
+                this.Left = 0;
+                this.Width = SystemParameters.WorkArea.Width;
+                this.Height = SystemParameters.WorkArea.Height;
+
+                inputPreview.Height = this.Height / SCREEN_RATIO;
+                for (int i = OFFSET_TEXTBOX; i < OUTPUT_TEXTBOX_COUNT + OFFSET_TEXTBOX; i++)
+                {
+                    outputTextBoxes[i].Height = this.Height / SCREEN_RATIO;
+                }
+
+            } else if ( WindowState == WindowState.Normal) {
+
+                this.Top = previousState[0];
+                this.Left = previousState[1];
+                this.Width = previousState[2];
+                this.Height = previousState[3];
+            }
         }
     }
 }

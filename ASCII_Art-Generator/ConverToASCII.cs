@@ -58,8 +58,8 @@ namespace ASCII_Art_Generator
                 //TimeSpan ts = sw.Elapsed;
                 //Console.WriteLine("Time elapsed: {0}", sw.Elapsed);
 
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
+                //Stopwatch sw = new Stopwatch();
+                //sw.Start();
                 Parallel.For(0, (height / resolution) - 1, i =>
                 {
                     StringBuilder convertedString = new StringBuilder();
@@ -78,9 +78,9 @@ namespace ASCII_Art_Generator
                     }
                     ASCIIarr[i] = (convertedString);
                 });
-                sw.Stop();
-                TimeSpan ts = sw.Elapsed;
-                Console.WriteLine("Time elapsed: {0}", sw.Elapsed);
+                //sw.Stop();
+                //TimeSpan ts = sw.Elapsed;
+                //Console.WriteLine("Time elapsed: {0}", sw.Elapsed);
             }
             return ASCIIarr;
         }

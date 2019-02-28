@@ -1,13 +1,5 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
+﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace ASCII_Art_Generator
@@ -51,6 +43,15 @@ namespace ASCII_Art_Generator
             //set image source
             inputPreview.Source = myBitmapImage;
             Tabs.SelectedIndex = 0;
+        }
+
+        private void GetASCIIArt()
+        {
+            for (int i = OFFSET_TEXTBOX; i < OUTPUT_TEXTBOX_COUNT + OFFSET_TEXTBOX; i++)
+            {
+                ASCIIArts[i] = ConvertPixelsToASCII(pixels, i);
+                PrintASCIIArt(ASCIIArts[i], i);
+            }
         }
     }
 }
