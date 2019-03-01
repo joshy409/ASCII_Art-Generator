@@ -12,15 +12,15 @@ Once you find the ASCII art you want you can also export the art to a .txt file.
 
 ## How to Use
 ![A screenshot of the included sample project](ASCII_Art-Generator/SampleScreenShot1.png)
-Click the Import button to open up file dialog and select a image you want to convert
-The image will be loaded into the preview in the Input tab and its Width and Height is displayed on the right
+Click the Import button to open up file dialog and select a image you want to convert<br />
+The image will be loaded into the preview in the Input tab and its Width and Height is displayed on the right<br />
 
 ![A screenshot of the included sample project](ASCII_Art-Generator/SampleScreenShot2.png)
-Click on the Output tab to look at the generated ASCII art
-Change the value of Pixels per Kernel slider at the bottom to change the ASCII art resolution
-Change the value of Font Size slider on the right to zoom in or out
-Click on the Export button the export the ASCII art to .txt
-The application will automatcially open the .txt you saved
+Click on the Output tab to look at the generated ASCII art<br />
+Change the value of Pixels per Kernel slider at the bottom to change the ASCII art resolution<br />
+Change the value of Font Size slider on the right to zoom in or out<br />
+Click on the Export button the export the ASCII art to .txt<br />
+The application will automatcially open the .txt you saved<br />
 
 ## How it Works
 1. Import an image from a file
