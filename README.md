@@ -22,6 +22,10 @@ Change the value of Font Size slider on the right to zoom in or out<br />
 Click on the Export button the export the ASCII art to .txt<br />
 The application will automatcially open the .txt you saved<br />
 
+
+## Sample
+![A screenshot of the included sample project](ASCII_Art-Generator/SampleScreenShot3.png)
+
 ## How it Works
 1. Import an image from a file
 2. Convert the image to grayscale
