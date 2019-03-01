@@ -48,10 +48,9 @@
                     <RowDefinition Height=".3*"/>
                     <RowDefinition Height="2.7*"/>
                 </Grid.RowDefinitions>
-
                 <Label  HorizontalAlignment="Center" Grid.Row="1" Content="Font Size"/>
-                <Slider  Grid.Row="2" Name ="fontSlider"  Orientation="Vertical"  Maximum="8" Minimum="1" TickPlacement="Both" IsSnapToTickEnabled="True" ValueChanged="Font_Slider_ValueChanged" Value="7" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
-                <TextBox HorizontalAlignment="Stretch" Grid.Row="3" Text="{Binding ElementName=fontSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" />
+                <Slider Grid.Row="2" Name ="fontSlider"  Orientation="Vertical"  Maximum="8" Minimum="1" TickPlacement="Both" IsSnapToTickEnabled="True" ValueChanged="Font_Slider_ValueChanged" Value="7" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
+                <TextBox HorizontalAlignment="Stretch" Grid.Row="3" Text="{Binding ElementName=fontSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" IsReadOnly="True" />
 
             </Grid>
             <Grid Grid.Column="2" Grid.Row="1">
