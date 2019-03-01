@@ -18,8 +18,6 @@ namespace ASCII_Art_Generator
         private const char LIGHTGRAY = '.';
         private const char WHITE = ' ';
 
-        
-
         private StringBuilder[] ConvertPixelsToASCII (PixelColor[,] pixels, int resolution)
         {
             StringBuilder[] ASCIIarr = null;
@@ -33,30 +31,31 @@ namespace ASCII_Art_Generator
 
                 ASCIIarr = new StringBuilder[height / resolution - 1];
 
-                //Stopwatch sw = new Stopwatch();
-                //sw.Start();
-                //for (int i = 0; i < (height / resolution) - 1; i++)
-                //{
-                //    StringBuilder convertedString = new StringBuilder();
-                //    for (int j = 0; j < (width / resolution) - 1; j++)
-                //    {
-                //        int sum = 0;
-                //        for (int k = 0; k < resolution; k++)
-                //        {
-                //            for (int l = 0; l < resolution; l++)
-                //            {
-                //                sum += pixels[(j * resolution) + k, (i * resolution) + l].Blue;
-                //            }
-                //        }
-                //        sum /= 25;
-                //        AppendASCII(convertedString, sum);
-                //    }
-                //    ASCIIarr[i] = convertedString;
-                //    outputTextBoxes[resolution].Text += (convertedString.ToString() + "\n");
-                //}
-                //sw.Stop();
-                //TimeSpan ts = sw.Elapsed;
-                //Console.WriteLine("Time elapsed: {0}", sw.Elapsed);
+                /*Stopwatch sw = new Stopwatch();
+                sw.Start();
+                for (int i = 0; i < (height / resolution) - 1; i++)
+                {
+                    StringBuilder convertedString = new StringBuilder();
+                    for (int j = 0; j < (width / resolution) - 1; j++)
+                    {
+                        int sum = 0;
+                        for (int k = 0; k < resolution; k++)
+                        {
+                            for (int l = 0; l < resolution; l++)
+                            {
+                                sum += pixels[(j * resolution) + k, (i * resolution) + l].Blue;
+                            }
+                        }
+                        sum /= 25;
+                        AppendASCII(convertedString, sum);
+                    }
+                    ASCIIarr[i] = convertedString;
+                    outputTextBoxes[resolution].Text += (convertedString.ToString() + "\n");
+                }
+                sw.Stop();
+                TimeSpan ts = sw.Elapsed;
+                Console.WriteLine("Time elapsed: {0}", sw.Elapsed);
+                */
 
                 //Stopwatch sw = new Stopwatch();
                 //sw.Start();
@@ -74,9 +73,9 @@ namespace ASCII_Art_Generator
                             }
                         }
                         sum /= 25;
-                        AppendASCII(convertedString, sum);
+                        ConverToASCIIAndAppend(convertedString, sum);
                     }
-                    ASCIIarr[i] = (convertedString);
+                    ASCIIarr[i] = convertedString;
                 });
                 //sw.Stop();
                 //TimeSpan ts = sw.Elapsed;
@@ -85,7 +84,7 @@ namespace ASCII_Art_Generator
             return ASCIIarr;
         }
 
-        private static void AppendASCII(StringBuilder convertedString, int sum)
+        private static void ConverToASCIIAndAppend(StringBuilder convertedString, int sum)
         {
             if (sum <= 30)
             {
@@ -123,16 +122,7 @@ namespace ASCII_Art_Generator
             {
                 convertedString.Append(WHITE);
             }
-
             convertedString.Append(" ");
-        }
-
-        private void PrintASCIIArt(StringBuilder[] art, int index)
-        {
-            if (art != null)
-            {
-                outputTextBoxes[index].Text = string.Join<StringBuilder>("\r\n", art);
-            }
         }
     }
 }

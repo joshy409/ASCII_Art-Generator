@@ -5,6 +5,7 @@ namespace ASCII_Art_Generator
 {
     public static class BitmapSourceExtensions
     {
+        //extension method to convert CopyPixel() which wants in 1-dim array to accept 2-dim array
         public static void CopyPixels2D(this BitmapSource source,  PixelColor[,] pixels, int stride, int offset)
         {
             var height = source.PixelHeight;

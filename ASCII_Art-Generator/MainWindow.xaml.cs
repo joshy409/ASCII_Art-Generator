@@ -17,9 +17,8 @@ namespace ASCII_Art_Generator
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        private const int CAPACITY = 10;
-        private const int DEFAULT_PIXEL = 5;
-        private const float SCREEN_RATIO = 1.3f;
+        private const int DEFAULT_PIXEL_KERNEL_WIDTH = 5;
+        private const float SCREEN_RATIO = 1.3f; //ratio used to calculate privew and textbox height to fit the screen
         private const int OUTPUT_TEXTBOX_COUNT = 7;
         private const int OFFSET_TEXTBOX = 2; //offset value so that slider value matches the index 
         private bool IsStart = false; // variable to prevent slider value changed function from being called at InitializeComponent()
@@ -28,7 +27,7 @@ namespace ASCII_Art_Generator
         PixelColor[,] pixels = null;
         TextBox[] outputTextBoxes = new TextBox[OUTPUT_TEXTBOX_COUNT + OFFSET_TEXTBOX];
 
-        private double[] previousState = new double[4];
+        private double[] previousPosition = new double[4];
 
         private int _kernel;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -56,24 +55,25 @@ namespace ASCII_Art_Generator
         private void Import_Click(object sender, RoutedEventArgs e)
         {
             // Create OpenFileDialog 
-            Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
-
-            // Set filter for file extension and default file extension 
-            dialog.Filter = "Image Files (*.png,*.jpg,*.jpeg)|*.png;*.jpg;*.jpeg";
+            Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog
+            {
+                // Set filter for file extension and default file extension 
+                Filter = "Image Files (*.png,*.jpg,*.jpeg)|*.png;*.jpg;*.jpeg"
+            };
 
             if (dialog.ShowDialog() == true)
             {
-                LoadPreview(dialog.FileName);
+                ShowImportedImage(dialog.FileName);
 
-                ASCIIArts = new StringBuilder[CAPACITY][];
+                ASCIIArts = new StringBuilder[OUTPUT_TEXTBOX_COUNT + OFFSET_TEXTBOX][];
 
                 ImageSource grayImageSource = ConvertImageToGrayScaleImage(dialog.FileName);
                 pixels = GetPixelColorData(grayImageSource);
 
-                resolutionSlider.Value = DEFAULT_PIXEL;
-                ClearTextBoxes(DEFAULT_PIXEL);
-                EnableTextBoxes(DEFAULT_PIXEL);
-                GetASCIIArt();
+                resolutionSlider.Value = DEFAULT_PIXEL_KERNEL_WIDTH;
+                ClearTextBoxes();
+                EnableTextBoxes(DEFAULT_PIXEL_KERNEL_WIDTH);
+                PrintASCIIArtToTextBox();
             }      
         }
 
@@ -129,10 +129,10 @@ namespace ASCII_Art_Generator
         {
             if (WindowState == WindowState.Maximized)
             {
-                previousState[0] = this.Top;
-                previousState[1] = this.Left;
-                previousState[2] = this.Width;
-                previousState[3] = this.Height;
+                previousPosition[0] = this.Top;
+                previousPosition[1] = this.Left;
+                previousPosition[2] = this.Width;
+                previousPosition[3] = this.Height;
 
                 this.Top = 0;
                 this.Left = 0;
@@ -147,10 +147,10 @@ namespace ASCII_Art_Generator
 
             } else if ( WindowState == WindowState.Normal) {
 
-                this.Top = previousState[0];
-                this.Left = previousState[1];
-                this.Width = previousState[2];
-                this.Height = previousState[3];
+                this.Top = previousPosition[0];
+                this.Left = previousPosition[1];
+                this.Width = previousPosition[2];
+                this.Height = previousPosition[3];
             }
         }
     }

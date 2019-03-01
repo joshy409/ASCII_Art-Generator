@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -6,7 +7,7 @@ namespace ASCII_Art_Generator
 {
     public partial class MainWindow : Window
     {
-        private void ClearTextBoxes(int index)
+        private void ClearTextBoxes()
         {
             for (int i = OFFSET_TEXTBOX; i < outputTextBoxes.Length; i++)
             {
@@ -14,8 +15,8 @@ namespace ASCII_Art_Generator
                 outputTextBoxes[i].Visibility = Visibility.Hidden;
                 outputTextBoxes[i].IsEnabled = false;
             }
-            outputTextBoxes[index].IsEnabled = true;
-            outputTextBoxes[index].Visibility = Visibility.Visible;
+            outputTextBoxes[DEFAULT_PIXEL_KERNEL_WIDTH].IsEnabled = true;
+            outputTextBoxes[DEFAULT_PIXEL_KERNEL_WIDTH].Visibility = Visibility.Visible;
         }
 
         private void EnableTextBoxes(int index)
@@ -29,7 +30,7 @@ namespace ASCII_Art_Generator
             outputTextBoxes[index].Visibility = Visibility.Visible;
         }
 
-        private void LoadPreview(string fileName)
+        private void ShowImportedImage(string fileName)
         {
             // Create source
             BitmapImage myBitmapImage = new BitmapImage();
@@ -45,12 +46,12 @@ namespace ASCII_Art_Generator
             Tabs.SelectedIndex = 0;
         }
 
-        private void GetASCIIArt()
+        private void PrintASCIIArtToTextBox()
         {
             for (int i = OFFSET_TEXTBOX; i < OUTPUT_TEXTBOX_COUNT + OFFSET_TEXTBOX; i++)
             {
                 ASCIIArts[i] = ConvertPixelsToASCII(pixels, i);
-                PrintASCIIArt(ASCIIArts[i], i);
+                outputTextBoxes[i].Text = string.Join<StringBuilder>("\r\n", ASCIIArts[i]);
             }
         }
     }
